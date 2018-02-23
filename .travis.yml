@@ -29,7 +29,7 @@ before_script:
   - lein uberjar
   - docker build -t system2 .
   - docker run -d -p 127.0.0.1:8081:8080 system2
-  - cd $HOME
+  - cd $HOME/system12test
 
 script:
   - lein test
