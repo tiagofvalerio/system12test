@@ -5,8 +5,8 @@ jdk:
 cache:
   directories:
   - $HOME/.m2
-#addons:
-#  postgresql: "9.3"
+addons:
+  postgresql: "9.3"
 services:
   - postgresql
   - rabbitmq
@@ -29,7 +29,7 @@ before_script:
   - lein with-profile integration-test migrate
   - lein uberjar
   - docker build -t system1 .
-  - docker run --net=host -d -p 127.0.0.1:8080:8080 --link postgres system1
+  - docker run --net=host -d -p 127.0.0.1:8080:8080 system1
   - cd $HOME/system2
   - lein with-profile integration-test migrate
   - lein uberjar
