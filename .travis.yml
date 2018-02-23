@@ -1,0 +1,34 @@
+language: clojure
+lein: 2.6.1
+jdk:
+  - oraclejdk8
+cache:
+  directories:
+  - $HOME/.m2
+addons:
+  postgresql: "9.3"
+services:
+  - postgresql
+  - rabbitmq
+  - docker
+before_install:
+  - mkdir $HOME/system1 && mkdir $HOME/system2
+  - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system1/tarball/master | tar zx --strip-components 1 -C $HOME/system1"
+  - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system2/tarball/master | tar zx --strip-components 1 -C $HOME/system2"
+
+before_script:
+  - psql -c 'create database "system1";' -U postgres
+  - psql -c 'create database "system2";' -U postgres
+  - cd $HOME/system1
+  - lein with-profile integration-test migrate
+  - lein uberjar
+  - docker build -t system1 .
+  - docker run -d -p 127.0.0.1:8080:8080 system1
+  - cd $HOME/system2
+  - lein with-profile integration-test migrate
+  - lein uberjar
+  - docker build -t system2 .
+  - docker run -d -p 127.0.0.1:8080:8080 system2
+
+script:
+  - lein test
