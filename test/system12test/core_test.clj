@@ -6,10 +6,10 @@
 
 (deftest a-test
   (testing "should system2 send a successfuly message to system1"
-    (let [response-system2 (client/post "http://localhost:8081/v1/create-test"
+    (let [response-system2 (client/post "http://127.0.0.1:8081/v1/create-test"
                              {:body (json/write-str "teste")
                               :content-type :json})
-          response-system1 (client/get "http://localhost:8080/v1/test")
+          response-system1 (client/get "http://127.0.0.1:8080/v1/test")
           body-response-system1 (json/read-str (:body response-system1) :key-fn keyword)]
       (is (= (:status response-system2) 200))
       (is (= (:status response-system1) 200))

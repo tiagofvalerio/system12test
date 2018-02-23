@@ -32,6 +32,7 @@ before_script:
   - docker build -t system2 .
   - docker run -d -p 127.0.0.1:8081:8080 system2
   - cd $HOME/build/tiagofvalerio/system12test
+  - docker ps -a
 
 script:
   - lein test
