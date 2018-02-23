@@ -5,8 +5,8 @@ jdk:
 cache:
   directories:
   - $HOME/.m2
-addons:
-  postgresql: "9.3"
+#addons:
+#  postgresql: "9.3"
 services:
   #- postgresql
   - rabbitmq
