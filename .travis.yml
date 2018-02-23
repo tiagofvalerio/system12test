@@ -8,7 +8,7 @@ cache:
 #addons:
 #  postgresql: "9.3"
 services:
-  #- postgresql
+  - postgresql
   - rabbitmq
   - docker
 before_install:
@@ -19,22 +19,22 @@ before_install:
   - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system2/tarball/master | tar zx --strip-components 1 -C $HOME/system2"
 
 before_script:
-  - docker run --name postgres -d postgres
-  - docker ps -a
-  - docker exec postgres psql -h 0.0.0.0 -U postgres -c "create database system1"
-  - docker exec postgres psql -h 0.0.0.0 -U postgres -c "create database system2"
-  #- psql -c 'create database "system1";' -U postgres
-  #- psql -c 'create database "system2";' -U postgres
+  #- docker run --name postgres -d postgres -c ""
+  #- docker ps -a
+  #- docker exec postgres psql -U postgres -c "create database system1"
+  #- docker exec postgres psql -U postgres -c "create database system2"
+  - psql -c 'create database "system1";' -U postgres
+  - psql -c 'create database "system2";' -U postgres
   - cd $HOME/system1
   - lein with-profile integration-test migrate
   - lein uberjar
   - docker build -t system1 .
-  - docker run -d -p 127.0.0.1:8080:8080 --link postgres system1
+  - docker run --net=host -d -p 127.0.0.1:8080:8080 --link postgres system1
   - cd $HOME/system2
   - lein with-profile integration-test migrate
   - lein uberjar
   - docker build -t system2 .
-  - docker run -d -p 127.0.0.1:8081:8080 system2
+  - docker run --net=host -d -p 127.0.0.1:8081:8080 system2
   - cd $HOME/build/tiagofvalerio/system12test
   - docker ps -a
 
