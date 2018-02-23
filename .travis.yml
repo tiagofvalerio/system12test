@@ -19,10 +19,10 @@ before_install:
   - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system2/tarball/master | tar zx --strip-components 1 -C $HOME/system2"
 
 before_script:
-  - docker run -p 5433:5432 --name postgres -d postgres
+  - docker run --name postgres -d postgres
   - docker ps -a
-  - docker exec postgres psql -U postgres -c "create database system1"
-  - docker exec postgres psql -U postgres -c "create database system2"
+  - docker exec postgres psql -h 0.0.0.0 -U postgres -c "create database system1"
+  - docker exec postgres psql -h 0.0.0.0 -U postgres -c "create database system2"
   #- psql -c 'create database "system1";' -U postgres
   #- psql -c 'create database "system2";' -U postgres
   - cd $HOME/system1
