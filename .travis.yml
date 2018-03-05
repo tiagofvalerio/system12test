@@ -18,4 +18,5 @@ before_install:
 script:
   - pwd && ls
   - docker-compose up -d
+  - docker ps -a
   - lein test
