@@ -21,7 +21,7 @@ script:
   - docker ps -a
   - lein test
 
-after_script:
+after_failure:
   - echo "system2**************************"
   - docker logs system12test_system2_1
   - echo "system1**************************"
