@@ -16,6 +16,5 @@ before_install:
   - cd system2 && lein uberjar && cd ../
 
 script:
-  - pwd %% ls
   - docker-compose up -d
   - lein test
