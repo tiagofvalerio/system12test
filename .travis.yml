@@ -19,14 +19,14 @@ before_install:
 
 script:
   - docker-compose up -d
-  - docker logs postgres
+  #- docker logs postgres
   - sleep 20
-  - docker logs postgres
-  - docker ps -a
-  - netstat -tulpn
+  #- docker logs postgres
+  #- docker ps -a
+  #- netstat -tulpn
   - lein test
-  - echo "system2**************************"
-  - docker logs system12test_system2_1
-  - docker logs system12test_system2_1
-  - docker logs system12test_system1_1
-  - docker logs system12test_system1_1
+  #- echo "system2**************************"
+  #- docker logs system12test_system2_1
+  #- docker logs system12test_system2_1
+  #- docker logs system12test_system1_1
+  #- docker logs system12test_system1_1
