@@ -27,4 +27,6 @@ script:
   - lein test
   - echo "system2**************************"
   - docker logs system12test_system2_1
-  - docker logs -f system12test_system2_1
+  - docker logs system12test_system2_1
+  - docker logs system12test_system1_1
+  - docker logs system12test_system1_1
