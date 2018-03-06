@@ -1,5 +1,23 @@
 version: '3'
 services:
+  postgres:
+    build: .
+    restart: always
+    container_name: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+    environment:
+      - "RABBITMQ_NODENAME=rabbitmq"
   system1:
     build: ./system1
     depends_on:
@@ -24,21 +42,3 @@ services:
       - "8081:8080"
     environment:
       - KRAKEN_BROKER_URL=amqp://rabbitmq
-  rabbitmq:
-    image: rabbitmq
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-    environment:
-      - "RABBITMQ_NODENAME=rabbitmq"
-  postgres:
-    build: .
-    restart: always
-    container_name: postgres
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    volumes:
-       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
