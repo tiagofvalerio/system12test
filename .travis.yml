@@ -14,13 +14,13 @@ before_install:
   - mkdir system1 && mkdir system2
   - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system1/tarball/master | tar zx --strip-components 1 -C system1"
   - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system2/tarball/master | tar zx --strip-components 1 -C system2"
-  #- cd system1 && lein uberjar && cd ../
-  #- cd system2 && lein uberjar && cd ../
+  - cd system1 && lein uberjar && cd ../
+  - cd system2 && lein uberjar && cd ../
 
 script:
   - docker-compose up -d
   - docker logs postgres
-  - sleep 20
+  #- sleep 20
   - docker logs postgres
   - docker ps -a
   - netstat -tulpn
