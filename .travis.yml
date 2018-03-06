@@ -20,8 +20,8 @@ before_install:
 script:
   - pwd && ls
   - docker-compose up -d
-  - docker ps -a
   - sleep 10
+  - docker ps -a
   - netstat -tulpn
   - lein test
   - echo "system2**************************"
