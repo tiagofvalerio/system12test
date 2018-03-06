@@ -18,7 +18,6 @@ before_install:
   #- cd system2 && lein uberjar && cd ../
 
 script:
-  - pwd && ls
   - docker-compose up -d
   - sleep 10
   - docker ps -a
