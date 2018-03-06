@@ -21,7 +21,7 @@ script:
   - pwd && ls
   - docker-compose up -d
   - docker ps -a
-  - lsof -PiTCP -sTCP:LISTEN
+  - netstat -tulpn
   - lein test
   - echo "system2**************************"
   - docker logs system12test_system2_1
