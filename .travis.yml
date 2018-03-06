@@ -3,6 +3,9 @@ language: clojure
 lein: 2.6.1
 jdk:
   - oraclejdk8
+env:
+  global:
+  - DOCKER_VERSION="1.9.1-0~trusty"
 cache:
   directories:
   - $HOME/.m2
@@ -10,7 +13,8 @@ services:
   - docker
 before_install:
   - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - sudo apt-get remove docker-engine -yq
+  - sudo apt-get install docker-engine=$DOCKER_VERSION -yq --no-install-suggests --no-install-recommends --force-yes -o Dpkg::Options::="--force-confnew"
   - mkdir system1 && mkdir system2
   - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system1/tarball/master | tar zx --strip-components 1 -C system1"
   - "curl -sSL -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/tiagofvalerio/system2/tarball/master | tar zx --strip-components 1 -C system2"
