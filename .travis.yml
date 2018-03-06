@@ -20,7 +20,7 @@ before_install:
 script:
   - docker-compose up -d
   - docker logs postgres
-  - sleep 20
+  - sleep 19
   - docker logs postgres
   - docker ps -a
   - netstat -tulpn
